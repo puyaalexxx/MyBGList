@@ -7,11 +7,11 @@ namespace MyBGList.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BoardGameController : ControllerBase
+    public class BoardGamesController : ControllerBase
     {
-        private readonly ILogger<BoardGameController> _logger;
+        private readonly ILogger<BoardGamesController> _logger;
 
-        public BoardGameController(ILogger<BoardGameController> logger)
+        public BoardGamesController(ILogger<BoardGamesController> logger)
         {
             _logger = logger;
         }
