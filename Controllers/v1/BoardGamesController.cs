@@ -1,11 +1,13 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MyBGList.DTOs;
+using MyBGList.DTOs.v1;
 using MyBGList.Models;
 
-namespace MyBGList.Controllers
+namespace MyBGList.Controllers.v1
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class BoardGamesController : ControllerBase
     {
