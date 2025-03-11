@@ -1,0 +1,19 @@
+﻿services:
+    mssql:
+      container_name: sql-server
+      image: mcr.microsoft.com/mssql/server:2019-latest
+      #restart: always
+      environment:
+        ACCEPT_EULA: "Y"
+        SA_PASSWORD: "MyStrongPassword12345678"
+      ports:
+        - "1433:1433"
+      volumes:
+        - my-volume:/var/opt/mssql
+
+volumes:
+    my-volume:
+      
+networks:
+  mynetwork:
+    driver: bridge
