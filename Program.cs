@@ -4,6 +4,8 @@ using Microsoft.Extensions.Options;
 using MyBGList.Config;
 using MyBGList.Models;
 using MyBGList.Swagger;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,6 +68,40 @@ builder.Services.AddApiVersioning(options =>
     });
 
 //builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
+
+builder.Host.UseSerilog((ctx, lc) =>
+{
+    //lc.MinimumLevel.Is(Serilog.Events.LogEventLevel.Warning);
+    //lc.MinimumLevel.Override("MyBGList", Serilog.Events.LogEventLevel.Information); // override appsettings.json config
+    
+    lc.ReadFrom.Configuration(ctx.Configuration);
+    lc.Enrich.WithEnvironmentName();
+    lc.Enrich.WithThreadId();
+
+    lc.WriteTo.File("Logs/log.txt", outputTemplate: 
+        "{Timestamp:HH:mm:ss} [{Level:u3}]" + "[{MachineName} #{ThreadId}]" + "{Message:lj}{NewLine}{Exception}"
+        ,rollingInterval: RollingInterval.Day); // write logs to file
+    
+    lc.WriteTo.MSSqlServer(
+       // restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information, // restrict log level for this sink only
+        ctx.Configuration.GetConnectionString("DefaultConnection"),
+        sinkOptions: new MSSqlServerSinkOptions
+        {
+            TableName = "LogEvents",
+            AutoCreateSqlTable = true
+        },
+        columnOptions: new ColumnOptions{
+            AdditionalColumns = new[]
+            {
+                new SqlColumn()
+                {
+                    ColumnName = "SourceContext",
+                    PropertyName = "SourceContext",
+                    DataType = System.Data.SqlDbType.NVarChar
+                }
+            }
+        });
+}, writeToProviders: true);
 
 var app = builder.Build();
 

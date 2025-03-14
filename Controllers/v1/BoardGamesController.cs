@@ -2,6 +2,7 @@ using System.Linq.Dynamic.Core;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MyBGList.Constants;
 using MyBGList.DTOs;
 using MyBGList.DTOs.v1;
 using MyBGList.Models;
@@ -26,6 +27,9 @@ public class BoardGamesController : ControllerBase
     //[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 60)]
     public async Task<DTOs.v1.RestDTO<BoardGame[]>> Get([FromQuery] RequestDTO<BoardGameDTO> input)
     {
+        _logger.LogInformation(CustomLogEvents.BoardGamesController_Get,
+            "Get method started [{MachineName}] [{ThreadId}]", Environment.MachineName, Environment.CurrentManagedThreadId);
+
         var query = _context.BoardGames!.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(input.FilterQuery)) query = query.Where(b => b.Name.Contains(input.FilterQuery));
