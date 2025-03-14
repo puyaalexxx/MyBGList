@@ -24,46 +24,31 @@ public class BoardGamesController : ControllerBase
 
     [HttpGet(Name = "GetBoardGames")]
     //[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 60)]
-    public async Task<RestDTO<BoardGame[]>> Get(int pageIndex = 0, int pageSize = 10, string? sortColumn = "Name",
-        string? sortOrder = "ASC", string? filterQuery = null)
+    public async Task<DTOs.v1.RestDTO<BoardGame[]>> Get([FromQuery] RequestDTO<BoardGameDTO> input)
     {
         var query = _context.BoardGames!.AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(filterQuery)) query = query.Where(b => b.Name.Contains(filterQuery));
+        if (!string.IsNullOrWhiteSpace(input.FilterQuery)) query = query.Where(b => b.Name.Contains(input.FilterQuery));
 
         var recordCount = await query.CountAsync();
 
-        query = query.OrderBy($"{sortColumn} {sortOrder}")
-            .Skip(pageIndex * pageSize)
-            .Take(pageSize);
+        query = query.OrderBy($"{input.SortColumn} {input.SortOrder}")
+            .Skip(input.PageIndex * input.PageSize)
+            .Take(input.PageSize);
 
-        return new RestDTO<BoardGame[]>
+        return new DTOs.v1.RestDTO<BoardGame[]>
         {
-            /*Data = new BoardGame[] {
-                new BoardGame() {
-                    Id = 1,
-                    Name = "Axis & Allies",
-                    Year = 1981
-                },
-                new BoardGame() {
-                    Id = 2,
-                    Name = "Citadels",
-                    Year = 2000
-                },
-                new BoardGame() {
-                    Id = 3,
-                    Name = "Terraforming Mars",
-                    Year = 2016
-                }
-            },*/
             Data = await query.ToArrayAsync(),
-            PageIndex = pageIndex,
-            PageSize = pageSize,
+            PageIndex = input.PageIndex,
+            PageSize = input.PageSize,
             RecordCount = recordCount,
             Links = new List<LinkDTO>
             {
                 new(
-                    Url.Action(null, "BoardGames", new { pageIndex, pageSize }, null, Request.Scheme)!,
+                    Url.Action(null, "BoardGames",
+                        new { input.PageIndex, input.PageSize },
+                        null,
+                        Request.Scheme)!,
                     "self",
                     "GET")
             }
@@ -72,12 +57,12 @@ public class BoardGamesController : ControllerBase
 
     [HttpPost(Name = "UpdateBoardGame")]
     [ResponseCache(NoStore = true)]
-    public async Task<RestDTO<BoardGame?>> Post(BoardGameDTO model)
+    public async Task<DTOs.v1.RestDTO<BoardGame?>> Post(BoardGameDTO model)
     {
         var boardgame = await _context.BoardGames!
             .Where(b => b.Id == model.Id)
             .FirstOrDefaultAsync();
-        
+
         if (boardgame != null)
         {
             if (!string.IsNullOrEmpty(model.Name))
@@ -93,7 +78,7 @@ public class BoardGamesController : ControllerBase
             await _context.SaveChangesAsync();
         }
 
-        return new RestDTO<BoardGame?>
+        return new DTOs.v1.RestDTO<BoardGame?>
         {
             Data = boardgame,
             Links = new List<LinkDTO>
@@ -109,35 +94,35 @@ public class BoardGamesController : ControllerBase
             }
         };
     }
-    
+
     [HttpDelete(Name = "DeleteBoardGame")]
     [ResponseCache(NoStore = true)]
-    public async Task<RestDTO<BoardGame?>> Delete(int id)
+    public async Task<DTOs.v1.RestDTO<BoardGame?>> Delete(int id)
     {
         var boardgame = await _context.BoardGames!
             .Where(b => b.Id == id)
             .FirstOrDefaultAsync();
-        
+
         if (boardgame != null)
         {
             _context.BoardGames!.Remove(boardgame);
-            
+
             await _context.SaveChangesAsync();
         }
-        
-        return new RestDTO<BoardGame?>()
+
+        return new DTOs.v1.RestDTO<BoardGame?>
         {
             Data = boardgame,
             Links = new List<LinkDTO>
             {
-                new LinkDTO(
+                new(
                     Url.Action(
                         null,
                         "BoardGames",
                         id,
                         Request.Scheme)!,
                     "self",
-                    "DELETE"),
+                    "DELETE")
             }
         };
     }

@@ -1,10 +1,9 @@
 using Asp.Versioning;
-using Asp.Versioning.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
 using MyBGList.Config;
 using MyBGList.Models;
+using MyBGList.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,9 +13,24 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+    {
+        options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(
+            x => $"The value '{x}' is invalid.");
+        options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(
+            x => $"The field {x} must be a number.");
+        options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor(
+            (x, y) => $"The value '{x}' is not valid for {y}.");
+        options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(
+            () => "A value is required.");
+    }
+);
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.ParameterFilter<SortColumnFilter>();
+    options.ParameterFilter<SortOrderFilter>();
+});
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(cfg =>
@@ -25,9 +39,9 @@ builder.Services.AddCors(options =>
         cfg.AllowAnyHeader();
         cfg.AllowAnyMethod();
     });
-    
+
     options.AddPolicy(
-        name: "AnyOrigin", 
+        "AnyOrigin",
         cfg =>
         {
             cfg.AllowAnyOrigin();
@@ -51,6 +65,8 @@ builder.Services.AddApiVersioning(options =>
         options.SubstituteApiVersionInUrl = true;
     });
 
+//builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -61,13 +77,13 @@ if (app.Environment.IsDevelopment())
     {
         var descriptions = app.DescribeApiVersions();
         foreach (var description in descriptions)
-        {
-            options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"MyBGList {description.GroupName.ToUpperInvariant()}");
-        }
+            options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+                $"MyBGList {description.GroupName.ToUpperInvariant()}");
 
-        options.RoutePrefix = string.Empty;  // Swagger UI at the root (remove swagger from https://localhost:7074/swagger/index.html)
+        options.RoutePrefix =
+            string.Empty; // Swagger UI at the root (remove swagger from https://localhost:7074/swagger/index.html)
     });
-    
+
     app.UseDeveloperExceptionPage();
 }
 else

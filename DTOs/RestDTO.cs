@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
+﻿using MyBGList.DTOs.v1;
 
-namespace MyBGList.DTOs.v1;
+namespace MyBGList.DTOs;
 
 public class RestDTO<T>
 {
@@ -8,7 +8,6 @@ public class RestDTO<T>
 
     public int? PageIndex { get; set; }
 
-    [Range(1, 100, ErrorMessage = "Page count must be between 1 and 100")]
     public int? PageSize { get; set; }
 
     public int? RecordCount { get; set; }
