@@ -1,0 +1,66 @@
+12:37:45 [INF][ #1]Now listening on: https://localhost:7074
+12:37:45 [INF][ #1]Now listening on: http://localhost:5011
+12:37:45 [INF][ #1]Application started. Press Ctrl+C to shut down.
+12:37:45 [INF][ #1]Hosting environment: Development
+12:37:45 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+12:37:47 [INF][alexxxs-MacBook-Pro #4]Get method started [alexxxs-MacBook-Pro] [4]
+12:37:49 [INF][ #4]Executed DbCommand (98ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BoardGames] AS [b]
+12:37:50 [INF][ #8]Executed DbCommand (112ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate], [b].[LastModifiedDate], [b].[MaxPlayers], [b].[MinAge], [b].[MinPlayers], [b].[Name], [b].[OwnedUsers], [b].[Playtime], [b].[RatingAverage], [b].[UsersRated], [b].[Year]
+FROM [BoardGames] AS [b]
+ORDER BY [b].[Name]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+12:37:54 [INF][ #20]Application is shutting down...
+12:38:30 [INF][ #1]Now listening on: https://localhost:7074
+12:38:30 [INF][ #1]Now listening on: http://localhost:5011
+12:38:30 [INF][ #1]Application started. Press Ctrl+C to shut down.
+12:38:30 [INF][ #1]Hosting environment: Development
+12:38:30 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+12:38:50 [INF][alexxxs-MacBook-Pro #11]Get method started [alexxxs-MacBook-Pro] [11]
+12:38:53 [INF][ #11]Executed DbCommand (129ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BoardGames] AS [b]
+12:39:14 [INF][ #20]Executed DbCommand (425ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate], [b].[LastModifiedDate], [b].[MaxPlayers], [b].[MinAge], [b].[MinPlayers], [b].[Name], [b].[OwnedUsers], [b].[Playtime], [b].[RatingAverage], [b].[UsersRated], [b].[Year]
+FROM [BoardGames] AS [b]
+ORDER BY [b].[Name]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+12:40:42 [INF][ #1]Now listening on: https://localhost:7074
+12:40:42 [INF][ #1]Now listening on: http://localhost:5011
+12:40:42 [INF][ #1]Application started. Press Ctrl+C to shut down.
+12:40:42 [INF][ #1]Hosting environment: Development
+12:40:42 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+12:40:46 [INF][alexxxs-MacBook-Pro #17]Get method started [alexxxs-MacBook-Pro] [17]
+12:40:48 [INF][ #15]Executed DbCommand (30ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BoardGames] AS [b]
+12:40:56 [INF][ #8]Executed DbCommand (213ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate], [b].[LastModifiedDate], [b].[MaxPlayers], [b].[MinAge], [b].[MinPlayers], [b].[Name], [b].[OwnedUsers], [b].[Playtime], [b].[RatingAverage], [b].[UsersRated], [b].[Year]
+FROM [BoardGames] AS [b]
+ORDER BY [b].[Name]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+12:42:02 [INF][ #1]Now listening on: https://localhost:7074
+12:42:02 [INF][ #1]Now listening on: http://localhost:5011
+12:42:02 [INF][ #1]Application started. Press Ctrl+C to shut down.
+12:42:02 [INF][ #1]Hosting environment: Development
+12:42:02 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+12:42:04 [INF][alexxxs-MacBook-Pro #8]Get method started [alexxxs-MacBook-Pro] [8]
+12:42:07 [INF][ #17]Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BoardGames] AS [b]
+12:42:13 [INF][ #11]Executed DbCommand (253ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate], [b].[LastModifiedDate], [b].[MaxPlayers], [b].[MinAge], [b].[MinPlayers], [b].[Name], [b].[OwnedUsers], [b].[Playtime], [b].[RatingAverage], [b].[UsersRated], [b].[Year]
+FROM [BoardGames] AS [b]
+ORDER BY [b].[Name]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+12:42:44 [INF][ #1]Now listening on: https://localhost:7074
+12:42:44 [INF][ #1]Now listening on: http://localhost:5011
+12:42:44 [INF][ #1]Application started. Press Ctrl+C to shut down.
+12:42:44 [INF][ #1]Hosting environment: Development
+12:42:44 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+12:42:46 [INF][alexxxs-MacBook-Pro #8]Get method started [alexxxs-MacBook-Pro] [8]
+12:42:48 [INF][ #10]Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BoardGames] AS [b]

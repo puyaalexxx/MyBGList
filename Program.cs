@@ -1,4 +1,6 @@
+using System.Data;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MyBGList.Config;
@@ -25,14 +27,19 @@ builder.Services.AddControllers(options =>
             (x, y) => $"The value '{x}' is not valid for {y}.");
         options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(
             () => "A value is required.");
+
+        options.CacheProfiles.Add("NoCache", new CacheProfile { NoStore = true });
+        options.CacheProfiles.Add("Any-60", new CacheProfile { Location = ResponseCacheLocation.Any, Duration = 60 });
     }
 );
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.ParameterFilter<SortColumnFilter>();
     options.ParameterFilter<SortOrderFilter>();
 });
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(cfg =>
@@ -51,6 +58,7 @@ builder.Services.AddCors(options =>
             cfg.AllowAnyMethod();
         });
 });
+
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
 //API versioning
@@ -69,35 +77,49 @@ builder.Services.AddApiVersioning(options =>
 
 //builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
+builder.Services.AddResponseCaching(options =>
+{
+    options.MaximumBodySize = 32 * 1024 * 1024;
+    options.SizeLimit = 50 * 1024 * 1024;
+});
+
+builder.Services.AddMemoryCache();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration["Redis:ConnectionString"];
+});
+
 builder.Host.UseSerilog((ctx, lc) =>
 {
     //lc.MinimumLevel.Is(Serilog.Events.LogEventLevel.Warning);
     //lc.MinimumLevel.Override("MyBGList", Serilog.Events.LogEventLevel.Information); // override appsettings.json config
-    
+
     lc.ReadFrom.Configuration(ctx.Configuration);
     lc.Enrich.WithEnvironmentName();
     lc.Enrich.WithThreadId();
 
-    lc.WriteTo.File("Logs/log.txt", outputTemplate: 
+    lc.WriteTo.File("Logs/log.txt", outputTemplate:
         "{Timestamp:HH:mm:ss} [{Level:u3}]" + "[{MachineName} #{ThreadId}]" + "{Message:lj}{NewLine}{Exception}"
-        ,rollingInterval: RollingInterval.Day); // write logs to file
-    
+        , rollingInterval: RollingInterval.Day); // write logs to file
+
     lc.WriteTo.MSSqlServer(
-       // restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information, // restrict log level for this sink only
+        // restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information, // restrict log level for this sink only
         ctx.Configuration.GetConnectionString("DefaultConnection"),
-        sinkOptions: new MSSqlServerSinkOptions
+        new MSSqlServerSinkOptions
         {
             TableName = "LogEvents",
             AutoCreateSqlTable = true
         },
-        columnOptions: new ColumnOptions{
+        columnOptions: new ColumnOptions
+        {
             AdditionalColumns = new[]
             {
-                new SqlColumn()
+                new SqlColumn
                 {
                     ColumnName = "SourceContext",
                     PropertyName = "SourceContext",
-                    DataType = System.Data.SqlDbType.NVarChar
+                    DataType = SqlDbType.NVarChar
                 }
             }
         });
@@ -130,6 +152,7 @@ else
 app.UseHttpsRedirection();
 app.MapControllers();
 app.UseCors();
+app.UseResponseCaching();
 
 /*app.MapGet("/error", () => Results.Problem());
 app.MapGet("/error/test", () =>

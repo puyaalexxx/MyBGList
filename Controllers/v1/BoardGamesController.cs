@@ -1,7 +1,9 @@
 using System.Linq.Dynamic.Core;
+using System.Text.Json;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using MyBGList.Constants;
 using MyBGList.DTOs;
 using MyBGList.DTOs.v1;
@@ -16,19 +18,23 @@ public class BoardGamesController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
     private readonly ILogger<BoardGamesController> _logger;
+    private readonly IMemoryCache _memoryCache;
 
-    public BoardGamesController(ILogger<BoardGamesController> logger, ApplicationDbContext context)
+    public BoardGamesController(ILogger<BoardGamesController> logger, ApplicationDbContext context,
+        IMemoryCache memoryCache)
     {
         _logger = logger;
         _context = context;
+        _memoryCache = memoryCache;
     }
 
     [HttpGet(Name = "GetBoardGames")]
-    //[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 60)]
+    [ResponseCache(CacheProfileName = "Any-60")]
     public async Task<DTOs.v1.RestDTO<BoardGame[]>> Get([FromQuery] RequestDTO<BoardGameDTO> input)
     {
         _logger.LogInformation(CustomLogEvents.BoardGamesController_Get,
-            "Get method started [{MachineName}] [{ThreadId}]", Environment.MachineName, Environment.CurrentManagedThreadId);
+            "Get method started [{MachineName}] [{ThreadId}]", Environment.MachineName,
+            Environment.CurrentManagedThreadId);
 
         var query = _context.BoardGames!.AsQueryable();
 
@@ -36,13 +42,22 @@ public class BoardGamesController : ControllerBase
 
         var recordCount = await query.CountAsync();
 
-        query = query.OrderBy($"{input.SortColumn} {input.SortOrder}")
-            .Skip(input.PageIndex * input.PageSize)
-            .Take(input.PageSize);
+        BoardGame[]? result = null;
+        var cacheKey = $"{input.GetType()}-{JsonSerializer.Serialize(input)}";
+        if (!_memoryCache.TryGetValue<BoardGame[]>(cacheKey, out result))
+        {
+            query = query.OrderBy($"{input.SortColumn} {input.SortOrder}")
+                .Skip(input.PageIndex * input.PageSize)
+                .Take(input.PageSize);
+
+            result = await query.ToArrayAsync();
+
+            _memoryCache.Set(cacheKey, result, new TimeSpan(0, 0, 30));
+        }
 
         return new DTOs.v1.RestDTO<BoardGame[]>
         {
-            Data = await query.ToArrayAsync(),
+            Data = result ?? Array.Empty<BoardGame>(),
             PageIndex = input.PageIndex,
             PageSize = input.PageSize,
             RecordCount = recordCount,

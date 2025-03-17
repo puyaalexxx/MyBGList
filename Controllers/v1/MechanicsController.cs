@@ -1,8 +1,11 @@
 ﻿using System.Linq.Dynamic.Core;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using MyBGList.DTOs;
 using MyBGList.DTOs.v1;
+using MyBGList.Extensions;
 using MyBGList.Models;
 
 namespace MyBGList.Controllers;
@@ -14,13 +17,15 @@ public class MechanicsController : ControllerBase
     private readonly ApplicationDbContext _context;
 
     private readonly ILogger<MechanicsController> _logger;
+    private readonly IDistributedCache _distributedCache;
 
     public MechanicsController(
         ApplicationDbContext context,
-        ILogger<MechanicsController> logger)
+        ILogger<MechanicsController> logger, IDistributedCache distributedCache)
     {
         _context = context;
         _logger = logger;
+        _distributedCache = distributedCache;
     }
 
     [HttpGet(Name = "GetMechanics")]
@@ -29,17 +34,29 @@ public class MechanicsController : ControllerBase
         [FromQuery] RequestDTO<MechanicDTO> input)
     {
         var query = _context.Mechanics!.AsQueryable();
+        
         if (!string.IsNullOrEmpty(input.FilterQuery))
             query = query.Where(b => b.Name.Contains(input.FilterQuery));
+        
         var recordCount = await query.CountAsync();
-        query = query
-            .OrderBy($"{input.SortColumn} {input.SortOrder}")
-            .Skip(input.PageIndex * input.PageSize)
-            .Take(input.PageSize);
+        
+        Mechanic[]? result = null;
+        var cacheKey = $"{input.GetType()}-{JsonSerializer.Serialize(input)}";
+        if (!_distributedCache.TryGetValue<Mechanic[]>(cacheKey, out result))
+        {
+            query = query
+                .OrderBy($"{input.SortColumn} {input.SortOrder}")
+                .Skip(input.PageIndex * input.PageSize)
+                .Take(input.PageSize);
+
+            result = await query.ToArrayAsync();
+
+            _distributedCache.Set(cacheKey, result, new TimeSpan(0, 0, 30));
+        }
 
         return new DTOs.RestDTO<Mechanic[]>
         {
-            Data = await query.ToArrayAsync(),
+            Data = result ?? new Mechanic[]{},
             PageIndex = input.PageIndex,
             PageSize = input.PageSize,
             RecordCount = recordCount,
