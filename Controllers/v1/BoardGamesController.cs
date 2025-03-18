@@ -1,6 +1,7 @@
 using System.Linq.Dynamic.Core;
 using System.Text.Json;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -74,6 +75,7 @@ public class BoardGamesController : ControllerBase
         };
     }
 
+    [Authorize]
     [HttpPost(Name = "UpdateBoardGame")]
     [ResponseCache(NoStore = true)]
     public async Task<DTOs.v1.RestDTO<BoardGame?>> Post(BoardGameDTO model)
@@ -114,6 +116,7 @@ public class BoardGamesController : ControllerBase
         };
     }
 
+    [Authorize]
     [HttpDelete(Name = "DeleteBoardGame")]
     [ResponseCache(NoStore = true)]
     public async Task<DTOs.v1.RestDTO<BoardGame?>> Delete(int id)

@@ -1,6 +1,7 @@
 using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyBGList.Models;
@@ -23,6 +24,7 @@ public class SeedController : ControllerBase
         _env = env;
     }
 
+    [Authorize]
     [HttpPut(Name = "Seed")]
     [ResponseCache(NoStore = true)]
     public async Task<IActionResult> Put()

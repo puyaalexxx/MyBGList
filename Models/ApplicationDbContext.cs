@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MyBGList.Models;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext<ApiUser>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
@@ -52,5 +53,14 @@ public class ApplicationDbContext : DbContext
             .HasForeignKey(f => f.MechanicId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
+
+        //change default identity table names
+        /*modelBuilder.Entity<ApiUser>().ToTable("ApiUsers");
+        modelBuilder.Entity<IdentityRole<string>>().ToTable("ApiRoles");
+        modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("ApiRoleClaims");
+        modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("ApiUserClaims");
+        modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("ApiUserLogins");
+        modelBuilder.Entity<IdentityUserRole<string>>().ToTable("ApiToRoles");
+        modelBuilder.Entity<IdentityUserToken<string>>().ToTable("ApiUserTokens");*/
     }
 }

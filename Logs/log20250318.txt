@@ -1,0 +1,62 @@
+12:55:53 [INF][ #49]Application is shutting down...
+12:56:05 [INF][ #1]Now listening on: https://localhost:7074
+12:56:06 [INF][ #1]Now listening on: http://localhost:5011
+12:56:06 [INF][ #1]Application started. Press Ctrl+C to shut down.
+12:56:06 [INF][ #1]Hosting environment: Development
+12:56:06 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+13:02:19 [INF][ #23]Application is shutting down...
+13:02:25 [INF][ #1]Now listening on: https://localhost:7074
+13:02:25 [INF][ #1]Now listening on: http://localhost:5011
+13:02:25 [INF][ #1]Application started. Press Ctrl+C to shut down.
+13:02:25 [INF][ #1]Hosting environment: Development
+13:02:25 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+13:17:46 [INF][ #3]Application is shutting down...
+13:17:49 [INF][ #1]Now listening on: https://localhost:7074
+13:17:49 [INF][ #1]Now listening on: http://localhost:5011
+13:17:49 [INF][ #1]Application started. Press Ctrl+C to shut down.
+13:17:49 [INF][ #1]Hosting environment: Development
+13:17:49 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+13:18:07 [INF][alexxxs-MacBook-Pro #8]Get method started [alexxxs-MacBook-Pro] [8]
+13:18:09 [INF][ #12]Executed DbCommand (107ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BoardGames] AS [b]
+13:18:09 [INF][ #19]Executed DbCommand (116ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate], [b].[LastModifiedDate], [b].[MaxPlayers], [b].[MinAge], [b].[MinPlayers], [b].[Name], [b].[OwnedUsers], [b].[Playtime], [b].[RatingAverage], [b].[UsersRated], [b].[Year]
+FROM [BoardGames] AS [b]
+ORDER BY [b].[Name]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+13:20:06 [INF][alexxxs-MacBook-Pro #23]Get method started [alexxxs-MacBook-Pro] [23]
+13:20:06 [INF][ #8]Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BoardGames] AS [b]
+13:20:06 [INF][ #8]Executed DbCommand (39ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate], [b].[LastModifiedDate], [b].[MaxPlayers], [b].[MinAge], [b].[MinPlayers], [b].[Name], [b].[OwnedUsers], [b].[Playtime], [b].[RatingAverage], [b].[UsersRated], [b].[Year]
+FROM [BoardGames] AS [b]
+ORDER BY [b].[Name]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+13:21:41 [INF][ #21]Executed DbCommand (14ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+13:23:19 [INF][alexxxs-MacBook-Pro #28]Get method started [alexxxs-MacBook-Pro] [28]
+13:23:19 [INF][ #27]Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BoardGames] AS [b]
+13:23:19 [INF][ #29]Executed DbCommand (131ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate], [b].[LastModifiedDate], [b].[MaxPlayers], [b].[MinAge], [b].[MinPlayers], [b].[Name], [b].[OwnedUsers], [b].[Playtime], [b].[RatingAverage], [b].[UsersRated], [b].[Year]
+FROM [BoardGames] AS [b]
+ORDER BY [b].[Name]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+13:25:24 [INF][alexxxs-MacBook-Pro #34]Get method started [alexxxs-MacBook-Pro] [34]
+13:25:24 [INF][ #34]Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BoardGames] AS [b]
+13:25:24 [INF][ #30]Executed DbCommand (109ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate], [b].[LastModifiedDate], [b].[MaxPlayers], [b].[MinAge], [b].[MinPlayers], [b].[Name], [b].[OwnedUsers], [b].[Playtime], [b].[RatingAverage], [b].[UsersRated], [b].[Year]
+FROM [BoardGames] AS [b]
+ORDER BY [b].[Name]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+13:25:45 [INF][alexxxs-MacBook-Pro #34]Get method started [alexxxs-MacBook-Pro] [34]
+13:25:45 [INF][ #35]Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BoardGames] AS [b]
