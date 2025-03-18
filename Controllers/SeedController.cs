@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyBGList.Models;
 using MyBGList.Models.Csv;
+using DefaultPath = System.IO.Path;
 
 namespace MyBGList.Controllers;
 
@@ -36,7 +37,7 @@ public class SeedController : ControllerBase
             Delimiter = ";"
         };
         using var reader = new StreamReader(
-            Path.Combine(_env.ContentRootPath, "Data/bgg_dataset.csv"));
+            DefaultPath.Combine(_env.ContentRootPath, "Data/bgg_dataset.csv"));
         using var csv = new CsvReader(reader, config);
         var existingBoardGames = await _context.BoardGames!
             .ToDictionaryAsync(bg => bg.Id);

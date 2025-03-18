@@ -12,6 +12,16 @@
         <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0"/>
         <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0"/>
         <PackageReference Include="CsvHelper" Version="33.0.1"/>
+        <PackageReference Include="Google.Protobuf" Version="3.30.1"/>
+        <PackageReference Include="Grpc.AspNetCore.Server" Version="2.70.0"/>
+        <PackageReference Include="Grpc.Net.Client" Version="2.70.0"/>
+        <PackageReference Include="Grpc.Tools" Version="2.71.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="HotChocolate.AspNetCore" Version="15.0.3"/>
+        <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="15.0.3"/>
+        <PackageReference Include="HotChocolate.Data.EntityFramework" Version="15.0.3"/>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.14"/>
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.14"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.5"/>
@@ -34,6 +44,10 @@
 
     <ItemGroup>
         <Folder Include="Data\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="gRPC/grpc.proto"/>
     </ItemGroup>
 
 </Project>

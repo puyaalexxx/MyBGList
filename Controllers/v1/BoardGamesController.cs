@@ -29,6 +29,42 @@ public class BoardGamesController : ControllerBase
         _memoryCache = memoryCache;
     }
 
+    [HttpGet("{id}")]
+    [ResponseCache(CacheProfileName = "Any-60")]
+    public async Task<DTOs.v1.RestDTO<BoardGame?>> GetBoardGame(int id)
+    {
+        _logger.LogInformation(CustomLogEvents.BoardGamesController_Get,
+            "GetBoardGame method started.");
+
+        BoardGame? result = null;
+        var cacheKey = $"GetBoardGame-{id}";
+
+        if (!_memoryCache.TryGetValue(cacheKey, out result))
+        {
+            result = await _context.BoardGames!.FirstOrDefaultAsync(bg => bg.Id == id);
+            _memoryCache.Set(cacheKey, result, new TimeSpan(0, 0, 30));
+        }
+
+        return new DTOs.v1.RestDTO<BoardGame?>
+        {
+            Data = result,
+            PageIndex = 0,
+            PageSize = 1,
+            RecordCount = result != null ? 1 : 0,
+            Links = new List<LinkDTO>
+            {
+                new(
+                    Url.Action(
+                        null,
+                        "BoardGames",
+                        new { id },
+                        Request.Scheme)!,
+                    "self",
+                    "GET")
+            }
+        };
+    }
+
     [HttpGet(Name = "GetBoardGames")]
     [ResponseCache(CacheProfileName = "Any-60")]
     public async Task<DTOs.v1.RestDTO<BoardGame[]>> Get([FromQuery] RequestDTO<BoardGameDTO> input)
@@ -45,7 +81,7 @@ public class BoardGamesController : ControllerBase
 
         BoardGame[]? result = null;
         var cacheKey = $"{input.GetType()}-{JsonSerializer.Serialize(input)}";
-        if (!_memoryCache.TryGetValue<BoardGame[]>(cacheKey, out result))
+        if (!_memoryCache.TryGetValue(cacheKey, out result))
         {
             query = query.OrderBy($"{input.SortColumn} {input.SortOrder}")
                 .Skip(input.PageIndex * input.PageSize)

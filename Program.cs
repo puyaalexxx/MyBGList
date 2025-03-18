@@ -1,5 +1,4 @@
 using System.Data;
-using System.Globalization;
 using System.Text;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,6 +9,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyBGList.Config;
+using MyBGList.GraphQL;
+using MyBGList.gRPC;
 using MyBGList.Models;
 using MyBGList.Swagger;
 using Serilog;
@@ -44,7 +45,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.ParameterFilter<SortColumnFilter>();
     options.ParameterFilter<SortOrderFilter>();
-    
+
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
@@ -54,7 +55,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "bearer",
         BearerFormat = "JWT"
     });
-    
+
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -150,6 +151,16 @@ builder.Services.AddIdentity<ApiUser, IdentityRole>(options =>
     options.Password.RequiredLength = 12;
 }).AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddGraphQLServer()
+    .AddAuthorization()
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
+    .AddProjections()
+    .AddFiltering()
+    .AddSorting();
+
+builder.Services.AddGrpc();
+
 builder.Host.UseSerilog((ctx, lc) =>
 {
     //lc.MinimumLevel.Is(Serilog.Events.LogEventLevel.Warning);
@@ -215,6 +226,8 @@ app.UseCors();
 app.UseResponseCaching();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapGraphQL();
+app.MapGrpcService<GrpcService>();
 
 /*app.MapGet("/error", () => Results.Problem());
 app.MapGet("/error/test", () =>

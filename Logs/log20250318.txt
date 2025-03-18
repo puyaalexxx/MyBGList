@@ -60,3 +60,76 @@ OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
 13:25:45 [INF][ #35]Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
 SELECT COUNT(*)
 FROM [BoardGames] AS [b]
+14:02:53 [INF][ #24]Application is shutting down...
+14:03:00 [INF][ #1]Now listening on: https://localhost:7074
+14:03:00 [INF][ #1]Now listening on: http://localhost:5011
+14:03:00 [INF][ #1]Application started. Press Ctrl+C to shut down.
+14:03:00 [INF][ #1]Hosting environment: Development
+14:03:00 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+14:03:29 [INF][alexxxs-MacBook-Pro #17]Get method started [alexxxs-MacBook-Pro] [17]
+14:03:31 [INF][ #4]Executed DbCommand (74ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BoardGames] AS [b]
+14:03:32 [INF][ #4]Executed DbCommand (59ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate], [b].[LastModifiedDate], [b].[MaxPlayers], [b].[MinAge], [b].[MinPlayers], [b].[Name], [b].[OwnedUsers], [b].[Playtime], [b].[RatingAverage], [b].[UsersRated], [b].[Year]
+FROM [BoardGames] AS [b]
+ORDER BY [b].[Name]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+14:03:39 [INF][ #7]GetBoardGame method started.
+14:03:39 [INF][ #7]Executed DbCommand (12ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate], [b].[LastModifiedDate], [b].[MaxPlayers], [b].[MinAge], [b].[MinPlayers], [b].[Name], [b].[OwnedUsers], [b].[Playtime], [b].[RatingAverage], [b].[UsersRated], [b].[Year]
+FROM [BoardGames] AS [b]
+WHERE [b].[Id] = @__id_0
+14:21:18 [INF][ #26]Application is shutting down...
+15:29:12 [INF][ #1]Now listening on: https://localhost:7074
+15:29:12 [INF][ #1]Now listening on: http://localhost:5011
+15:29:12 [INF][ #1]Application started. Press Ctrl+C to shut down.
+15:29:12 [INF][ #1]Hosting environment: Development
+15:29:12 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+15:32:13 [INF][ #21]Executed DbCommand (195ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [b].[Id], [b].[Name], [b].[Year]
+FROM [BoardGames] AS [b]
+ORDER BY [b].[Id]
+15:33:44 [WRN][ #24]Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+15:33:44 [INF][ #24]Executed DbCommand (123ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Year], [t0].[c], [t0].[Name], [t0].[BoardGameId], [t0].[DomainId], [t0].[Id], [t1].[c], [t1].[Name], [t1].[BoardGameId], [t1].[MechanicId], [t1].[Id]
+FROM (
+    SELECT TOP(@__p_0) [b].[Id], [b].[Name], [b].[Year]
+    FROM [BoardGames] AS [b]
+    ORDER BY [b].[Id]
+) AS [t]
+LEFT JOIN (
+    SELECT CAST(1 AS bit) AS [c], [d].[Name], [b0].[BoardGameId], [b0].[DomainId], [d].[Id]
+    FROM [BoardGames_Domains] AS [b0]
+    INNER JOIN [Domains] AS [d] ON [b0].[DomainId] = [d].[Id]
+) AS [t0] ON [t].[Id] = [t0].[BoardGameId]
+LEFT JOIN (
+    SELECT CAST(1 AS bit) AS [c], [m].[Name], [b1].[BoardGameId], [b1].[MechanicId], [m].[Id]
+    FROM [BoardGames_Mechanics] AS [b1]
+    INNER JOIN [Mechanics] AS [m] ON [b1].[MechanicId] = [m].[Id]
+) AS [t1] ON [t].[Id] = [t1].[BoardGameId]
+ORDER BY [t].[Id], [t0].[BoardGameId], [t0].[DomainId], [t0].[Id], [t1].[BoardGameId], [t1].[MechanicId]
+15:45:42 [INF][ #39]Executed DbCommand (13ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+15:46:56 [INF][alexxxs-MacBook-Pro #44]Get method started [alexxxs-MacBook-Pro] [44]
+15:46:56 [INF][ #38]Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [BoardGames] AS [b]
+15:46:57 [INF][ #44]Executed DbCommand (41ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate], [b].[LastModifiedDate], [b].[MaxPlayers], [b].[MinAge], [b].[MinPlayers], [b].[Name], [b].[OwnedUsers], [b].[Playtime], [b].[RatingAverage], [b].[UsersRated], [b].[Year]
+FROM [BoardGames] AS [b]
+ORDER BY [b].[Name]
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+16:11:06 [INF][ #33]Application is shutting down...
+16:31:24 [INF][ #1]Now listening on: https://localhost:7074
+16:31:24 [INF][ #1]Now listening on: http://localhost:5011
+16:31:24 [INF][ #1]Application started. Press Ctrl+C to shut down.
+16:31:24 [INF][ #1]Hosting environment: Development
+16:31:24 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+16:31:43 [INF][ #9]Executed DbCommand (41ms) [Parameters=[@__request_Id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate], [b].[LastModifiedDate], [b].[MaxPlayers], [b].[MinAge], [b].[MinPlayers], [b].[Name], [b].[OwnedUsers], [b].[Playtime], [b].[RatingAverage], [b].[UsersRated], [b].[Year]
+FROM [BoardGames] AS [b]
+WHERE [b].[Id] = @__request_Id_0
+16:35:36 [INF][ #25]Application is shutting down...
