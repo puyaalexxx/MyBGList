@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using MyBGList.Attributes;
 using MyBGList.Constants;
 using MyBGList.DTOs;
 using MyBGList.DTOs.v1;
 using MyBGList.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MyBGList.Controllers.v1;
 
@@ -29,9 +31,13 @@ public class BoardGamesController : ControllerBase
         _memoryCache = memoryCache;
     }
 
+    [SwaggerOperation(
+        Summary = "Get a single board game",
+        Description = "Retrieves a single board game with the given id")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Item found")]
     [HttpGet("{id}")]
     [ResponseCache(CacheProfileName = "Any-60")]
-    public async Task<DTOs.v1.RestDTO<BoardGame?>> GetBoardGame(int id)
+    public async Task<DTOs.v1.RestDTO<BoardGame?>> GetBoardGame([CustomKeyValue("x-test-3", "value 3")] int id)
     {
         _logger.LogInformation(CustomLogEvents.BoardGamesController_Get,
             "GetBoardGame method started.");
@@ -65,9 +71,14 @@ public class BoardGamesController : ControllerBase
         };
     }
 
+    [SwaggerOperation(
+        Summary = "Get a list of board games",
+        Description = "Retrieves all board games with paging, sorting and filtering options")]
     [HttpGet(Name = "GetBoardGames")]
     [ResponseCache(CacheProfileName = "Any-60")]
-    public async Task<DTOs.v1.RestDTO<BoardGame[]>> Get([FromQuery] RequestDTO<BoardGameDTO> input)
+    public async Task<DTOs.v1.RestDTO<BoardGame[]>> Get(
+        [FromQuery] [SwaggerParameter("A DTO object that can be used to customize the data-retrieval parameters")]
+        RequestDTO<BoardGameDTO> input)
     {
         _logger.LogInformation(CustomLogEvents.BoardGamesController_Get,
             "Get method started [{MachineName}] [{ThreadId}]", Environment.MachineName,
@@ -111,6 +122,9 @@ public class BoardGamesController : ControllerBase
         };
     }
 
+    [SwaggerOperation(
+        Summary = "Update Board Game",
+        Description = "Updates the Board game's data")]
     [Authorize]
     [HttpPost(Name = "UpdateBoardGame")]
     [ResponseCache(NoStore = true)]
@@ -152,6 +166,9 @@ public class BoardGamesController : ControllerBase
         };
     }
 
+    [SwaggerOperation(
+        Summary = "Deletes a Board Game",
+        Description = "Deletes the Board game from the database")]
     [Authorize]
     [HttpDelete(Name = "DeleteBoardGame")]
     [ResponseCache(NoStore = true)]

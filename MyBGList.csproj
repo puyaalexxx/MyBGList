@@ -39,6 +39,7 @@
         <PackageReference Include="Serilog.Sinks.File" Version="6.0.0"/>
         <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="8.1.0"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.3.2"/>
         <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.0.2"/>
     </ItemGroup>
 
@@ -49,5 +50,10 @@
     <ItemGroup>
         <Protobuf Include="gRPC/grpc.proto"/>
     </ItemGroup>
+
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+    </PropertyGroup>
 
 </Project>

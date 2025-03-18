@@ -1,4 +1,5 @@
 using System.Data;
+using System.Reflection;
 using System.Text;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,6 +17,7 @@ using MyBGList.Swagger;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Path = System.IO.Path;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
 builder.Services.AddControllers(options =>
     {
         options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(
@@ -43,6 +46,13 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
+    //add Swagger docs annotations
+    options.EnableAnnotations();
+
+    //use XMl documentation
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
     options.ParameterFilter<SortColumnFilter>();
     options.ParameterFilter<SortOrderFilter>();
 
@@ -56,7 +66,7 @@ builder.Services.AddSwaggerGen(options =>
         BearerFormat = "JWT"
     });
 
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    /*options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
             new OpenApiSecurityScheme
@@ -69,7 +79,12 @@ builder.Services.AddSwaggerGen(options =>
             },
             Array.Empty<string>()
         }
-    });
+    });*/
+    //use this instead of above
+    options.OperationFilter<AuthRequirementFilter>();
+    options.DocumentFilter<CustomDocumentFilter>();
+    options.RequestBodyFilter<PasswordRequestFilter>();
+    options.SchemaFilter<CustomKeyValueFilter>();
 });
 
 builder.Services.AddCors(options =>
@@ -117,6 +132,7 @@ builder.Services.AddResponseCaching(options =>
 
 builder.Services.AddMemoryCache();
 
+//redis support
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration["Redis:ConnectionString"];
@@ -151,6 +167,7 @@ builder.Services.AddIdentity<ApiUser, IdentityRole>(options =>
     options.Password.RequiredLength = 12;
 }).AddEntityFrameworkStores<ApplicationDbContext>();
 
+//Add GraphQL support
 builder.Services.AddGraphQLServer()
     .AddAuthorization()
     .AddQueryType<Query>()
@@ -159,6 +176,7 @@ builder.Services.AddGraphQLServer()
     .AddFiltering()
     .AddSorting();
 
+//Add Grpc support
 builder.Services.AddGrpc();
 
 builder.Host.UseSerilog((ctx, lc) =>

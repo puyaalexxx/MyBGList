@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MyBGList.DTOs.v1;
 using MyBGList.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MyBGList.Controllers.v1;
 
@@ -33,6 +34,18 @@ public class AccountController : ControllerBase
         _signInManager = signInManager;
     }
 
+    /// <summary>
+    ///     Registers a new user
+    /// </summary>
+    /// <param name="input">A DTO containing the user data</param>
+    /// <returns>A 201 - Created Status Code in case of success</returns>
+    /// <response code="201">User has been registered</response>
+    /// <response code="400">Invalid data</response>
+    /// <response code="500">An error occurred</response>
+    [ProducesResponseType(typeof(string), 201)]
+    [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+    [ProducesResponseType(typeof(ProblemDetails), 500)]
+    [SwaggerOperation(Tags = new[] { "Auth" })] // grouping endpoints
     [HttpPost]
     [ResponseCache(CacheProfileName = "NoCache")]
     public async Task<ActionResult> Register(RegisterDTO input)
@@ -80,6 +93,18 @@ public class AccountController : ControllerBase
         }
     }
 
+    /// <summary>
+    ///     Performs a user login
+    /// </summary>
+    /// <param name="input">A DTO containing the user's credentials</param>
+    /// <returns>The Bearer Token</returns>
+    /// <response code="200">User has been logged in</response>
+    /// <response code="400">Login failed (Bad Request)</response>
+    /// <response code="401">Login failed (unauthorized)</response>
+    [ProducesResponseType(typeof(string), 200)]
+    [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+    [ProducesResponseType(typeof(ProblemDetails), 401)]
+    [SwaggerOperation(Tags = new[] { "Auth" })]
     [HttpPost]
     [ResponseCache(CacheProfileName = "NoCache")]
     public async Task<ActionResult> Login(LoginDTO input)

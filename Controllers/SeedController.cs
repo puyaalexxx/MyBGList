@@ -26,6 +26,7 @@ public class SeedController : ControllerBase
     }
 
     [Authorize]
+    [ApiExplorerSettings(IgnoreApi = true)]
     [HttpPut(Name = "Seed")]
     [ResponseCache(NoStore = true)]
     public async Task<IActionResult> Put()

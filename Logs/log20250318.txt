@@ -133,3 +133,86 @@ SELECT TOP(1) [b].[Id], [b].[BGGRank], [b].[ComplexityAverage], [b].[CreatedDate
 FROM [BoardGames] AS [b]
 WHERE [b].[Id] = @__request_Id_0
 16:35:36 [INF][ #25]Application is shutting down...
+17:08:53 [INF][ #1]Now listening on: https://localhost:7074
+17:08:53 [INF][ #1]Now listening on: http://localhost:5011
+17:08:53 [INF][ #1]Application started. Press Ctrl+C to shut down.
+17:08:53 [INF][ #1]Hosting environment: Development
+17:08:53 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+17:30:58 [INF][ #3]Application is shutting down...
+17:31:09 [INF][ #1]Now listening on: https://localhost:7074
+17:31:09 [INF][ #1]Now listening on: http://localhost:5011
+17:31:09 [INF][ #1]Application started. Press Ctrl+C to shut down.
+17:31:09 [INF][ #1]Hosting environment: Development
+17:31:09 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+17:55:29 [INF][ #4]Application is shutting down...
+17:55:37 [INF][ #1]Now listening on: https://localhost:7074
+17:55:37 [INF][ #1]Now listening on: http://localhost:5011
+17:55:37 [INF][ #1]Application started. Press Ctrl+C to shut down.
+17:55:37 [INF][ #1]Hosting environment: Development
+17:55:37 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+18:15:44 [INF][ #28]Application is shutting down...
+18:15:52 [INF][ #1]Now listening on: https://localhost:7074
+18:15:52 [INF][ #1]Now listening on: http://localhost:5011
+18:15:52 [INF][ #1]Application started. Press Ctrl+C to shut down.
+18:15:52 [INF][ #1]Hosting environment: Development
+18:15:52 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+18:22:43 [INF][ #3]Application is shutting down...
+18:22:49 [INF][ #1]Now listening on: https://localhost:7074
+18:22:49 [INF][ #1]Now listening on: http://localhost:5011
+18:22:49 [INF][ #1]Application started. Press Ctrl+C to shut down.
+18:22:49 [INF][ #1]Hosting environment: Development
+18:22:49 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+18:29:33 [INF][ #3]Application is shutting down...
+18:29:39 [INF][ #1]Now listening on: https://localhost:7074
+18:29:39 [INF][ #1]Now listening on: http://localhost:5011
+18:29:39 [INF][ #1]Application started. Press Ctrl+C to shut down.
+18:29:39 [INF][ #1]Hosting environment: Development
+18:29:39 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+18:30:29 [INF][ #21]Application is shutting down...
+18:30:35 [INF][ #1]Now listening on: https://localhost:7074
+18:30:35 [INF][ #1]Now listening on: http://localhost:5011
+18:30:35 [INF][ #1]Application started. Press Ctrl+C to shut down.
+18:30:35 [INF][ #1]Hosting environment: Development
+18:30:35 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+18:33:06 [INF][ #22]Application is shutting down...
+18:33:12 [INF][ #1]Now listening on: https://localhost:7074
+18:33:12 [INF][ #1]Now listening on: http://localhost:5011
+18:33:12 [INF][ #1]Application started. Press Ctrl+C to shut down.
+18:33:12 [INF][ #1]Hosting environment: Development
+18:33:12 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+18:45:40 [INF][ #28]Application is shutting down...
+18:45:48 [INF][ #1]Now listening on: https://localhost:7074
+18:45:48 [INF][ #1]Now listening on: http://localhost:5011
+18:45:48 [INF][ #1]Application started. Press Ctrl+C to shut down.
+18:45:48 [INF][ #1]Hosting environment: Development
+18:45:48 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+18:47:52 [INF][ #23]Application is shutting down...
+18:47:57 [INF][ #1]Now listening on: https://localhost:7074
+18:47:57 [INF][ #1]Now listening on: http://localhost:5011
+18:47:57 [INF][ #1]Application started. Press Ctrl+C to shut down.
+18:47:57 [INF][ #1]Hosting environment: Development
+18:47:57 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+18:48:33 [INF][ #19]Application is shutting down...
+18:48:38 [INF][ #1]Now listening on: https://localhost:7074
+18:48:38 [INF][ #1]Now listening on: http://localhost:5011
+18:48:38 [INF][ #1]Application started. Press Ctrl+C to shut down.
+18:48:38 [INF][ #1]Hosting environment: Development
+18:48:38 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+18:52:54 [INF][ #24]Application is shutting down...
+18:52:59 [INF][ #1]Now listening on: https://localhost:7074
+18:52:59 [INF][ #1]Now listening on: http://localhost:5011
+18:52:59 [INF][ #1]Application started. Press Ctrl+C to shut down.
+18:52:59 [INF][ #1]Hosting environment: Development
+18:52:59 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+19:02:17 [INF][ #6]Application is shutting down...
+19:02:22 [INF][ #1]Now listening on: https://localhost:7074
+19:02:22 [INF][ #1]Now listening on: http://localhost:5011
+19:02:22 [INF][ #1]Application started. Press Ctrl+C to shut down.
+19:02:22 [INF][ #1]Hosting environment: Development
+19:02:22 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
+19:05:50 [INF][ #23]Application is shutting down...
+19:05:55 [INF][ #1]Now listening on: https://localhost:7074
+19:05:55 [INF][ #1]Now listening on: http://localhost:5011
+19:05:55 [INF][ #1]Application started. Press Ctrl+C to shut down.
+19:05:55 [INF][ #1]Hosting environment: Development
+19:05:55 [INF][ #1]Content root path: /Users/alexxx/Desktop/Alexxx/projects/dotnet/pet-projects/MyBGList
