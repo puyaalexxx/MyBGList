@@ -6,6 +6,7 @@
 2. Entity Framework Core
 3. GRPC
 4. GraphQL
+5. Docker / Docker Compose
 
 <h2>Nuget packages used:</h2>
 
