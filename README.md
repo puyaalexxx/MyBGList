@@ -7,4 +7,4 @@
  - GraphQL
 
 <h2>Nuget packages used:</h2>
-![img.png](img.png)
+![Nugget Packages](https://res.cloudinary.com/dzuieskuw/image/upload/v1742374737/dotnet-pet-projects/mybglist-web-api.png)
