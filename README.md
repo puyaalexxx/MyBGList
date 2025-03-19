@@ -1,6 +1,7 @@
 # MyBGList - A small Web APi - Pet Project
 
 <h2>Technologies used:</h2>
+
 1. Asp.Net.core
 2. Entity Framework Core
 3. GRPC
